@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "426638287699",
+    "project_id": "vibely-e12ff",
+    "storage_bucket": "vibely-e12ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426638287699:android:8be74db53319c5b558b7a6",
+        "android_client_info": {
+          "package_name": "com.example.vibely"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426638287699-9utpoqebegs3stmqoflsq5p181pdrn4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj2lWEivvZ1MnTXeihCeXmdQcusjZmlAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426638287699-9utpoqebegs3stmqoflsq5p181pdrn4j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
