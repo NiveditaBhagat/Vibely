@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:vibely/constants.dart';
+import 'package:vibely/controller/auth_controller.dart';
 import 'package:vibely/view/widgets/button.dart';
 import 'package:vibely/view/widgets/text_input.dart';
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
 TextEditingController _emailController = new TextEditingController();
+
 TextEditingController _setpasswordController = new TextEditingController();
+
 TextEditingController _confirmpasswordController = new TextEditingController();
+
+TextEditingController _usernameController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +36,20 @@ TextEditingController _confirmpasswordController = new TextEditingController();
               fontFamily: 'Billabong', 
               fontSize: 65,
             color: Colors.white),),
-            Stack(
-              children: [
-                CircleAvatar(
-                 backgroundImage: AssetImage('assets/default.jpg'),
-                  radius: 65,
-                ),
-                Positioned(bottom: 0,right: 0, child: Icon(Icons.photo_camera, color: Colors.white,size: 30,))
-              ],
-             ),
+            InkWell(
+              onTap: (){
+                AuthController.instance.pickImage();
+              },
+              child: Stack(
+                children: [
+                  CircleAvatar(
+                   backgroundImage: AssetImage('assets/default.jpg'),
+                    radius: 65,
+                  ),
+                  Positioned(bottom: 0,right: 0, child: Icon(Icons.photo_camera, color: Colors.white,size: 30,))
+                ],
+               ),
+            ),
             SizedBox(height: 39,),
               
                
@@ -71,7 +87,7 @@ TextEditingController _confirmpasswordController = new TextEditingController();
                 Container(
                 margin: EdgeInsetsDirectional.symmetric(horizontal: 20),
                 child: TextInputField(
-                  controller: _emailController,
+                  controller: _usernameController,
                   myLabelText: "Username",
                   myIcon: Icons.person,
                 ),
@@ -79,7 +95,9 @@ TextEditingController _confirmpasswordController = new TextEditingController();
                SizedBox(height: 40,),
               Button(
                 text: 'SIGN UP',
-                onTap: (){},
+                onTap: (){
+                  AuthController.instance.SignUp(_usernameController.text, _emailController.text, _setpasswordController.text, AuthController.instance.proimg);
+                },
               )
             ],
           ),
