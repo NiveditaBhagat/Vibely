@@ -1,3 +1,5 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "editor.accessibilityPageSize": 10,
+    "window.zoomLevel": 1.5
 }
