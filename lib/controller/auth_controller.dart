@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vibely/model/user.dart';
+import 'package:vibely/view/screens/auth/login_screen.dart';
+import 'package:vibely/view/screens/home_screen.dart';
 
 class AuthController extends GetxController{
   static AuthController instance =Get.find();
@@ -17,6 +19,25 @@ class AuthController extends GetxController{
     final img= File(image.path);
     this.proimg=img;
   }
+
+   late Rx<User?> _user;
+   //user persistenace
+   @override
+  void onReady() {
+    super.onReady();
+    _user=Rx<User?>(FirebaseAuth.instance.currentUser) ;
+    _user.bindStream(FirebaseAuth.instance.authStateChanges());
+    ever(_user, _setInitialView);
+  }
+
+  _setInitialView(User? user){
+    if(user==null){
+      Get.offAll(()=> LoginScreen());
+    }else{
+      Get.offAll(()=> HomeScreen());
+    }
+  }
+
 
   //User Register
   void SignUp (String username,String email,String password, File? image)async{
@@ -48,5 +69,20 @@ class AuthController extends GetxController{
     TaskSnapshot snapshot = await uploadTask;
     String imageDwnUrl=await snapshot.ref.getDownloadURL();
     return imageDwnUrl;
+  }
+
+
+  login(String email, String password)async{
+    try{
+
+    
+    if(email.isNotEmpty&& password.isNotEmpty){
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+    }else{
+      Get.snackbar("Error Logging In", "Please enter all the feilds"); 
+    }
+    }catch(e){
+      Get.snackbar("Error Logging In", e.toString());
+    }
   }
 }

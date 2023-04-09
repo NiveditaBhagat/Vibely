@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vibely/constants.dart';
+import 'package:vibely/controller/auth_controller.dart';
 import 'package:vibely/view/widgets/button.dart';
 import 'package:vibely/view/widgets/text_input.dart';
 class LoginScreen extends StatelessWidget {
@@ -47,7 +48,9 @@ TextEditingController _passwordController = new TextEditingController();
             SizedBox(height: 40,),
             Button(
               text: 'LOGIN',
-              onTap: (){},
+              onTap: (){
+                AuthController.instance.login(_emailController.text, _passwordController.text);
+              },
             )
           ],
         ),
