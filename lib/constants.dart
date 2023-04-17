@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:vibely/view/screens/add_vedio.dart';
 
 // getRandomColor() => Colors.primaries[Random().nextInt(Colors.primaries.length)];
 
@@ -16,10 +17,10 @@ const backgroundColor = Colors.black;
 var buttonColor = Colors.red[400];
 const borderColor = Colors.grey;
 
-const pageindex=[
-  'Home',
-  'Search',
-  'Upload Vedio',
-  'Messages',
-  'Profile',
+var pageindex=[
+  Text('Home',style: TextStyle(color: Colors.white),),
+  Text('Search',style: TextStyle(color: Colors.white),),
+   AddVedioScreen(),
+  Text('Messages',style: TextStyle(color: Colors.white),),
+  Text('Profile',style: TextStyle(color: Colors.white),),
 ];

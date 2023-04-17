@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
   final String text;
 final void Function() onTap;
-  const Button({Key? key, required this.text, required this.onTap})
+final double height;
+final double width;
+  const Button({Key? key, required this.text, required this.onTap, required this.height, required this.width})
       : super(key: key);
 
   @override
@@ -36,8 +38,8 @@ final void Function() onTap;
          borderRadius: BorderRadius.circular(30),
         
          ),
-         height: 55,
-         width: 300,
+         height: height,
+         width: width,
       ),
     );
   }

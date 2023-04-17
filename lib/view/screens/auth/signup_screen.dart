@@ -98,6 +98,8 @@ TextEditingController _usernameController = new TextEditingController();
                 onTap: (){
                   AuthController.instance.SignUp(_usernameController.text, _emailController.text, _setpasswordController.text, AuthController.instance.proimg);
                 },
+              height: 55,
+              width: 300,
               )
             ],
           ),
