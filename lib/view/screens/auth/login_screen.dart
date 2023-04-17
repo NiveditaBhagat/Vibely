@@ -51,6 +51,8 @@ TextEditingController _passwordController = new TextEditingController();
               onTap: (){
                 AuthController.instance.login(_emailController.text, _passwordController.text);
               },
+              height: 55,
+              width: 300,
             )
           ],
         ),
