@@ -44,7 +44,9 @@ showDialogOpt(BuildContext context){
         ),
       ),
        SimpleDialogOption(
-        onPressed: (){},
+        onPressed: (){
+           Navigator.pop(context);
+        },
         child: Row(
           children: [
             Icon(Icons.close),

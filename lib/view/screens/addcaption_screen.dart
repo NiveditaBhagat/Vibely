@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:vibely/controller/upload_video_controller.dart';
 import 'package:vibely/view/widgets/button.dart';
 import 'package:vibely/view/widgets/text_input.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddCaptionScreen extends StatefulWidget {
   File vedioFile;
@@ -20,6 +22,7 @@ class AddCaptionScreen extends StatefulWidget {
 class _AddCaptionScreenState extends State<AddCaptionScreen> {
 
   late VideoPlayerController vedioPlayerController;
+  VideoUploadController videoUploadController= Get.put(VideoUploadController());
   TextEditingController songNameController= TextEditingController();
   TextEditingController captionController= TextEditingController();
 
@@ -72,7 +75,10 @@ class _AddCaptionScreenState extends State<AddCaptionScreen> {
                         myIcon: Icons.closed_caption,
                         ),
                         SizedBox(height: 17,),
-                        Button(text: 'Share', onTap: (){}, height: 42, width: 200),
+                        Button(text: 'Share', onTap: (){
+                          videoUploadController.uploadVideo(songNameController.text, 
+                          captionController.text, widget.vedioPath!);
+                        }, height: 42, width: 200),
                   ],
                 ),
               )
