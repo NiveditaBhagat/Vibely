@@ -11,9 +11,11 @@ String profilePhotoUrl;
       child: Stack(
         children: [
           Positioned(
+            left: 5,
             child: Container(
               height: 50,
               width: 50,
+              padding: EdgeInsets.all(1),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(25),
