@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vibely/view/widgets/album_rotator.dart';
 import 'package:vibely/view/widgets/profile_button.dart';
 import 'package:vibely/view/widgets/tiktok_vedio_player.dart';
 
@@ -59,7 +60,7 @@ class DisplayVedio_Screen extends StatelessWidget {
                       children: [
                         Icon(Icons.comment, size: 35, color: Colors.white,),
                         Text('Comments', style: TextStyle(fontSize: 14, color: Colors.white),),
-              
+                        AlbumRotator(profilePicUrl: "aaa",)
                       ],
                      ),
                     ],
