@@ -44,12 +44,17 @@ class DisplayVedio_Screen extends StatelessWidget {
                         children: [
                       
                          ProfileButton(profilePhotoUrl: data.profilePic),
-                         Column(
-                          children: [
-                            Icon(Icons.favorite, size: 35, color: Colors.white,),
-                            Text(data.likes.length.toString(), style: TextStyle(fontSize: 14, color: Colors.white),),
-                  
-                          ],
+                         InkWell(
+                          onTap: (){
+                            videoController.likedVedio(data.id);
+                          },
+                           child: Column(
+                            children: [
+                              Icon(Icons.favorite, size: 35, color: Colors.pinkAccent,),
+                              Text(data.likes.length.toString(), style: TextStyle(fontSize: 14, color: Colors.white),),
+                                           
+                            ],
+                           ),
                          ),
                      SizedBox(height: 7,),
                           Column(
