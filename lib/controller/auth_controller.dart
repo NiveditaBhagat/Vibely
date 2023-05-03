@@ -21,6 +21,7 @@ class AuthController extends GetxController{
   }
 
    late Rx<User?> _user;
+   User get user=> _user.value!;
    //user persistenace
    @override
   void onReady() {
