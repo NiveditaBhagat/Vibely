@@ -26,6 +26,14 @@ class _AddCaptionScreenState extends State<AddCaptionScreen> {
   TextEditingController songNameController= TextEditingController();
   TextEditingController captionController= TextEditingController();
 
+  Widget UploadContent = Text("Upload");
+
+  uploadVid(){
+  UploadContent = Text("Please Wait..");
+   setState(() {
+
+   });
+  }
 
 
 
@@ -75,7 +83,9 @@ class _AddCaptionScreenState extends State<AddCaptionScreen> {
                         myIcon: Icons.closed_caption,
                         ),
                         SizedBox(height: 17,),
-                        Button(text: 'Share', onTap: (){
+                        Button(
+                          text: 'Upload', onTap: (){
+                             uploadVid();
                           videoUploadController.uploadVideo(songNameController.text, 
                           captionController.text, widget.vedioPath!);
                         }, height: 42, width: 200),

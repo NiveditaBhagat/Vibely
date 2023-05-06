@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vibely/controller/vedio_controller.dart';
+import 'package:vibely/view/screens/comment_screen.dart';
 import 'package:vibely/view/widgets/album_rotator.dart';
 import 'package:vibely/view/widgets/profile_button.dart';
 import 'package:vibely/view/widgets/tiktok_vedio_player.dart';
@@ -10,6 +11,7 @@ class DisplayVedio_Screen extends StatelessWidget {
  final VideoController videoController=Get.put(VideoController());
   @override
   Widget build(BuildContext context) {
+    print('Building DisplayVedio_Screen...');
     return Scaffold(
       backgroundColor: Colors.black,
       body: Obx(() {
@@ -65,12 +67,17 @@ class DisplayVedio_Screen extends StatelessWidget {
                           ],
                          ),
                           SizedBox(height: 7,),
-                         Column(
-                          children: [
-                            Icon(Icons.comment, size: 35, color: Colors.white,),
-                            Text(data.commentsCount.toString(), style: TextStyle(fontSize: 14, color: Colors.white),),
-                            AlbumRotator(profilePicUrl: data.profilePic,)
-                          ],
+                         InkWell(
+                          onTap: (){
+                            //Navigator.push(context, MaterialPageRoute(builder: (context)=> CommentScreen()));
+                          },
+                           child: Column(
+                            children: [
+                              Icon(Icons.comment, size: 35, color: Colors.white,),
+                              Text(data.commentsCount.toString(), style: TextStyle(fontSize: 14, color: Colors.white),),
+                              AlbumRotator(profilePicUrl: data.profilePic,)
+                            ],
+                           ),
                          ),
                         ],
                       ),
