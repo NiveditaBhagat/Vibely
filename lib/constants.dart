@@ -19,10 +19,10 @@ var buttonColor = Colors.red[400];
 const borderColor = Colors.grey;
 
 var pageindex=[
-  DisplayVedio_Screen(),
 
+  DisplayVedio_Screen(),
   Text('Search',style: TextStyle(color: Colors.white),),
-   AddVedioScreen(),
+  AddVedioScreen(),
   Text('Messages',style: TextStyle(color: Colors.white),),
   Text('Profile',style: TextStyle(color: Colors.white),),
 ];

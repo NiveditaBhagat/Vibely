@@ -10,8 +10,10 @@ import 'package:video_compress/video_compress.dart';
 import '../model/vedio.dart';
 
 class VideoUploadController extends GetxController {
-    static VideoUploadController instance = Get.find();
+  static VideoUploadController instance = Get.find();
   var uuid = Uuid();
+  late File compressedVideo;
+  bool isCompressing = false;
 
   Future<File> _getThumb(String videoPath) async {
     final thumbnail = await VideoCompress.getFileThumbnail(videoPath);
@@ -29,51 +31,67 @@ class VideoUploadController extends GetxController {
   }
 
   uploadVideo(String songName, String caption, String vedioPath) async {
+    try {
+      String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    try{
-    String uid = FirebaseAuth.instance.currentUser!.uid;
+      DocumentSnapshot userDoc =
+          await FirebaseFirestore.instance.collection("users").doc(uid).get();
+      String id = uuid.v1();
+      String? vedioUrl = await _uploadVideoToStoarage(id, vedioPath);
 
-    DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection("users").doc(uid).get();
-    String id = uuid.v1();
-    String vedioUrl=await _uploadVideoToStoarage(id, vedioPath);
+      String thumbnail = await _uploadVideoThumbToStoarage(id, vedioPath);
+      Vedio video = Vedio(
+          uid: uid,
+          username: (userDoc.data! as Map<String, dynamic>)['name'],
+          videoUrl: vedioUrl!,
+          thumbnail: thumbnail,
+          songName: songName,
+          shareCount: 0,
+          commentsCount: 0,
+          likes: [],
+          profilePic: (userDoc.data! as Map<String, dynamic>)['profilePic'],
+          caption: caption,
+          id: id);
 
-    String thumbnail = await _uploadVideoThumbToStoarage(id, vedioPath);
-    Vedio video = Vedio(
-      uid: uid,
-      username: (userDoc.data! as Map<String, dynamic>)['name'],
-      videoUrl: vedioUrl,
-      thumbnail: thumbnail,
-      songName: songName,
-      shareCount: 0,
-      commentsCount: 0,
-      likes: [],
-      profilePic: (userDoc.data! as Map<String, dynamic>)['profilePic'],
-      caption: caption,
-      id: id
-    );
-
-    await FirebaseFirestore.instance.collection("videos").doc(id).set(video.toJson());
-    Get.snackbar('Vedio uploaded Successfully', " ");
-    Get.back(); 
-    }catch(e){
+      await FirebaseFirestore.instance
+          .collection("videos")
+          .doc(id)
+          .set(video.toJson());
+      Get.snackbar('Vedio uploaded Successfully', " ");
+      Get.back();
+    } catch (e) {
       Get.snackbar("Error uploading vedio", e.toString());
     }
   }
 
-  Future<String> _uploadVideoToStoarage(
+  Future<String?> _uploadVideoToStoarage(
       String videoId, String videoPath) async {
     Reference reference =
         FirebaseStorage.instance.ref().child('videos').child(videoId);
-    UploadTask uploadTask = reference.putFile(_compressVideo(videoPath));
+    if (isCompressing) {
+      Get.snackbar("Video compression in progress", "Please wait");
+      return Future.value();
+    }
+    isCompressing = true;
+    compressedVideo = (await _compressVideo(videoPath))!;
+    isCompressing = false;
+    UploadTask uploadTask = reference.putFile(compressedVideo);
     TaskSnapshot snapshot = await uploadTask;
-    String downloadUrl = await snapshot.ref.getDownloadURL();
+    String? downloadUrl = await snapshot.ref.getDownloadURL();
     return downloadUrl;
   }
 
-  _compressVideo(String videoPath) async {
-    final compressedVideo = await VideoCompress.compressVideo(videoPath,
-        quality: VideoQuality.MediumQuality);
-    return compressedVideo!.file;
+ Future<File?> _compressVideo(String videoPath) async {
+  final info = await VideoCompress.compressVideo(
+    videoPath,
+    quality: VideoQuality.MediumQuality,
+    deleteOrigin: false,
+  );
+
+  if (info != null) {
+    return info.file!;
+  } else {
+    throw Exception('Failed to compress video');
   }
+}
 }
